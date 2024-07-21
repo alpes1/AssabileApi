@@ -1,0 +1,6 @@
+@AssabileApi_HostAddress = http://localhost:5186
+
+GET {{AssabileApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
