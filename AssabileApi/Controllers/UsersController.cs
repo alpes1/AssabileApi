@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AssabileApi.Models;
 using Microsoft.AspNetCore.Identity.Data;
+using Microsoft.CodeAnalysis.Scripting;
 
 namespace AssabileApi.Controllers
 {
@@ -72,12 +73,14 @@ namespace AssabileApi.Controllers
 
             return NoContent();
         }
+
         //login 
-        [HttpGet("{username}/{password}")]
+        [HttpGet("login")]
         public async Task<ActionResult<User>> GetUserAttributes(string username, string password)
         {
             try
             {
+               
                 var user = await _context.Users.FirstOrDefaultAsync(u => u.NomUtilisateur== username && u.MotDePasse == password);
 
                 if (user == null)
@@ -107,6 +110,10 @@ namespace AssabileApi.Controllers
 
             return CreatedAtAction("GetUser", new { id = user.Id }, user);
         }
+        
+
+       
+
 
         // DELETE: api/Users/5
         [HttpDelete("{id}")]
@@ -129,4 +136,11 @@ namespace AssabileApi.Controllers
             return _context.Users.Any(e => e.Id == id);
         }
     }
+
+    public class LoginRequest
+    {
+        public string Username { get; set; }
+        public string Password { get; set; }
+    }
+
 }
